@@ -1,7 +1,6 @@
 # stend-history
 
-Undo/redo history helper for [`stend`](https://www.npmjs.com/package/stend) stores. It listens to store updates, captures snapshots, and lets you travel through time without touching the store’s internals.
-
+Undo/redo history helper for [`stend`](https://www.npmjs.com/package/stend) stores. It listens to store updates, captures snapshots, and lets you travel through time without touching the store’s internals.  
 `stend` 스토어를 위한 되돌리기/다시하기 히스토리 헬퍼입니다. 스토어 변경을 구독해 스냅샷을 쌓고, 스토어 내부를 건드리지 않고 시간 여행을 할 수 있게 만듭니다.
 
 ## 설치 / Installation
