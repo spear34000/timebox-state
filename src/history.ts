@@ -1,15 +1,15 @@
-import { clone } from "./clone";
+import { clone } from "./clone.js";
 import {
   HistoryController,
   HistoryOptions,
   HistoryState,
   HistoryStore,
   Snapshot,
-} from "./types";
+} from "./types.js";
 
 export function createHistory<T>(
   store: HistoryStore<T>,
-  options: HistoryOptions = {}
+  options: HistoryOptions<T> = {}
 ): HistoryController<T> {
   const max = options.max ?? 100;
 
@@ -26,7 +26,6 @@ export function createHistory<T>(
       timestamp: Date.now(),
 
       state: cloneFn(store.get()),
-      state: clone(store.get()),
 
     },
     future: [],
@@ -50,7 +49,6 @@ export function createHistory<T>(
       
       timestamp: Date.now(),
       state: cloneFn(next),
-      state: clone(next),
 
     };
 
@@ -60,7 +58,6 @@ export function createHistory<T>(
   function apply(snapshot: Snapshot<T>) {
     silent = true;
     store.set(cloneFn(snapshot.state), { silent: true });
-    store.set(clone(snapshot.state), { silent: true });
     silent = false;
   }
 
