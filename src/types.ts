@@ -13,6 +13,7 @@ export type HistoryState<T> = {
 
 export type HistoryOptions = {
   max?: number;
+
   clone?: (state: T) => T;
   shouldRecord?: (next: T, prev: T) => boolean;
 };
