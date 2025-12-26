@@ -11,7 +11,7 @@ export type HistoryState<T> = {
   future: Snapshot<T>[];
 };
 
-export type HistoryOptions = {
+export type HistoryOptions<T> = {
   max?: number;
 
   clone?: (state: T) => T;
