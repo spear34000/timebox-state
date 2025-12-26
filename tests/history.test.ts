@@ -1,25 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { createHistory } from "../src/history";
-
-type Listener<T> = (next: T, prev: T) => void;
-
-function createStore<T>(initial: T) {
-  let state = initial;
-  const listeners = new Set<Listener<T>>();
-
-  return {
-    get: () => state,
-    set: (next: T) => {
-      const prev = state;
-      state = next;
-      listeners.forEach((l) => l(next, prev));
-    },
-    subscribe: (fn: Listener<T>) => {
-      listeners.add(fn);
-      return () => listeners.delete(fn);
-    },
-  };
-}
+import { createStore } from "../src/store";
 
 describe("createHistory", () => {
   it("records snapshots and performs undo/redo", () => {
@@ -93,5 +74,18 @@ describe("createHistory", () => {
     expect(cloneSpy).toHaveBeenCalled();
     expect(cloneSpy.mock.calls.length).toBeGreaterThanOrEqual(5);
     expect(store.get().count).toBe(2);
+  });
+
+  it("respects silent set option in createStore", () => {
+    const store = createStore({ count: 0 });
+    const listener = vi.fn();
+    const unsubscribe = store.subscribe(listener);
+
+    store.set({ count: 1 }, { silent: true });
+    expect(listener).not.toHaveBeenCalled();
+
+    store.set({ count: 2 });
+    expect(listener).toHaveBeenCalledTimes(1);
+    unsubscribe();
   });
 });

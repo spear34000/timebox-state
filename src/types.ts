@@ -20,7 +20,7 @@ export type HistoryOptions<T> = {
 
 export type HistoryStore<T> = {
   get(): T;
-  set(state: T, options?: unknown): void;
+  set(state: T, options?: { silent?: boolean }): void;
   subscribe(fn: (next: T, prev: T) => void): () => void;
 };
 
