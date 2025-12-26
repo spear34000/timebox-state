@@ -1,7 +1,7 @@
-# stend-history
+# timebox-state
 
 
-독립적인 상태 히스토리 유틸리티입니다. `get / set / subscribe` 인터페이스를 가진 어떤 스토어든 연결해 스냅샷 기반의 되돌리기(undo) · 다시하기(redo) · 타임라인 점프(jump)를 제공합니다. 스토어 구현이나 이름에 종속되지 않으며, 필요하면 Stend 같은 스토어도 그대로 사용할 수 있습니다.
+독립적인 상태 히스토리 유틸리티입니다. `get / set / subscribe` 인터페이스를 가진 어떤 스토어든 연결해 스냅샷 기반의 되돌리기(undo) · 다시하기(redo) · 타임라인 점프(jump)를 제공합니다. 스토어 구현이나 이름에 종속되지 않으며, 필요하면 timebox 같은 스토어도 그대로 사용할 수 있습니다.
 
 ## 특징
 - 스냅샷 기반 타임트래블: undo/redo/jump, 현재 스냅샷 라벨링, past/future 초기화
@@ -10,24 +10,24 @@
 - 타입 안전: TypeScript 기반
 
 ## 설치
-Undo/redo history helper for [`stend`](https://www.npmjs.com/package/stend) stores. It listens to store updates, captures snapshots, and lets you travel through time without touching the store’s internals.  
-`stend` 스토어를 위한 되돌리기/다시하기 히스토리 헬퍼입니다. 스토어 변경을 구독해 스냅샷을 쌓고, 스토어 내부를 건드리지 않고 시간 여행을 할 수 있게 만듭니다.
+Undo/redo history helper for [`timebox-state`](https://www.npmjs.com/package/timebox-state) stores. It listens to store updates, captures snapshots, and lets you travel through time without touching the store’s internals.  
+`timebox-state` 스토어를 위한 되돌리기/다시하기 히스토리 헬퍼입니다. 스토어 변경을 구독해 스냅샷을 쌓고, 스토어 내부를 건드리지 않고 시간 여행을 할 수 있게 만듭니다.
 
 - Snapshot-based history with undo/redo/jump
-- Works with any Stend store shape—no schema required
+- Works with any timebox-state store shape—no schema required
 - Avoids feedback loops via silent writes
 
 ## 설치 / Installation
 
 ```bash
-npm install stend-history
+npm install timebox-state
 ```
 
 
 ## 빠른 시작
 
 ```ts
-import { createHistory } from "stend-history";
+import { createHistory } from "timebox-state";
 
 // get / set / subscribe를 제공하는 스토어라면 무엇이든 사용 가능합니다.
 const store = createStore({ count: 0 }); // 예시
@@ -38,13 +38,14 @@ const history = createHistory(store, {
   clone: (state) => structuredClone(state),
 });
 
+```
+
 ## 사용법 / Usage
 
 ```ts
-import { stend } from "stend";
-import { createHistory } from "stend-history";
+import { timebox, createHistory } from "timebox-state";
 
-const store = stend({ count: 0 });
+const store = timebox({ count: 0 });
 
 const history = createHistory(store);
 
