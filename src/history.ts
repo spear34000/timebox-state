@@ -1,11 +1,11 @@
-import { clone } from "./clone";
+import { clone } from "./clone.js";
 import {
   HistoryController,
   HistoryOptions,
   HistoryState,
   HistoryStore,
   Snapshot,
-} from "./types";
+} from "./types.js";
 
 export function createHistory<T>(
   store: HistoryStore<T>,

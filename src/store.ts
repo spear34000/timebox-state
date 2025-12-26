@@ -1,4 +1,7 @@
+import { HistoryStore } from "./types.js";
+
 import { HistoryStore } from "./types";
+
 
 export type StoreOptions = {
   silent?: boolean;
