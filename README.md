@@ -1,7 +1,7 @@
 # timebox-state
 
 
-독립적인 상태 히스토리 유틸리티입니다. `get / set / subscribe` 인터페이스를 가진 어떤 스토어든 연결해 스냅샷 기반의 되돌리기(undo) · 다시하기(redo) · 타임라인 점프(jump)를 제공합니다. 스토어 구현이나 이름에 종속되지 않으며, 필요하면 timebox 같은 스토어도 그대로 사용할 수 있습니다.
+독립적인 상태 히스토리 유틸리티입니다. `get / set / subscribe` 인터페이스를 가진 어떤 스토어든 연결해 스냅샷 기반의 되돌리기(undo) · 다시하기(redo) · 타임라인 점프(jump)를 제공합니다. 스토어 구현이나 이름에 종속되지 않으며, 필요하면 timebox-state 같은 스토어도 그대로 사용할 수 있습니다.
 
 ## 특징
 - 스냅샷 기반 타임트래블: undo/redo/jump, 현재 스냅샷 라벨링, past/future 초기화
@@ -27,7 +27,7 @@ npm install timebox-state
 ## 빠른 시작
 
 ```ts
-import { createHistory } from "timebox-state";
+import { createHistory, createStore } from "timebox-state";
 
 // get / set / subscribe를 제공하는 스토어라면 무엇이든 사용 가능합니다.
 const store = createStore({ count: 0 }); // 예시
@@ -43,9 +43,10 @@ const history = createHistory(store, {
 ## 사용법 / Usage
 
 ```ts
-import { timebox, createHistory } from "timebox-state";
+import { createHistory, createStore } from "timebox-state";
 
-const store = timebox({ count: 0 });
+// timebox-state 스토어나 get/set/subscribe를 제공하는 임의의 스토어 예시
+const store = createStore({ count: 0 });
 
 const history = createHistory(store);
 
