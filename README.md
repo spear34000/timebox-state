@@ -43,9 +43,16 @@ const history = createHistory(store, {
 ## 사용법 / Usage
 
 ```ts
+
 import { createHistory, createStore } from "timebox-state";
 
 // timebox-state 스토어나 get/set/subscribe를 제공하는 임의의 스토어 예시
+
+import { createHistory } from "timebox-state";
+
+// timebox-state 스토어나 get/set/subscribe를 제공하는 임의의 스토어 예시
+// (createStore 구현은 위 빠른 시작 예시 참고)
+
 const store = createStore({ count: 0 });
 
 const history = createHistory(store);
