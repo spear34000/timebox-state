@@ -1,5 +1,5 @@
 {
-  "name": "timebox-state-history",
+  "name": "timebox-state",
   "version": "0.1.0",
   "description": "Undo/redo history helper for timebox-state stores.",
   "license": "GPL-3.0-only",
