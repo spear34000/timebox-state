@@ -1,0 +1,20 @@
+{
+  "name": "stend-history",
+  "version": "0.1.0",
+  "description": "Undo/redo history helper for Stend stores.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --pretty",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build"
+  },
+  "keywords": ["stend", "state", "history", "undo", "redo"],
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  }
+}
