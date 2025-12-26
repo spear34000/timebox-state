@@ -12,6 +12,10 @@ export function createHistory<T>(
   options: HistoryOptions = {}
 ): HistoryController<T> {
   const max = options.max ?? 100;
+
+  const cloneFn = options.clone ?? clone;
+  const shouldRecord = options.shouldRecord ?? (() => true);
+  
   let id = 0;
   let silent = false;
 
@@ -20,7 +24,10 @@ export function createHistory<T>(
     present: {
       id: id++,
       timestamp: Date.now(),
+
+      state: cloneFn(store.get()),
       state: clone(store.get()),
+
     },
     future: [],
   };
@@ -28,6 +35,9 @@ export function createHistory<T>(
   // track changes from the store
   store.subscribe((next) => {
     if (silent) return;
+
+
+    if (!shouldRecord(next, history.present.state)) return;
 
     history.past.push(history.present);
 
@@ -37,8 +47,11 @@ export function createHistory<T>(
 
     history.present = {
       id: id++,
+      
       timestamp: Date.now(),
+      state: cloneFn(next),
       state: clone(next),
+
     };
 
     history.future = [];
@@ -46,6 +59,7 @@ export function createHistory<T>(
 
   function apply(snapshot: Snapshot<T>) {
     silent = true;
+    store.set(cloneFn(snapshot.state), { silent: true });
     store.set(clone(snapshot.state), { silent: true });
     silent = false;
   }
