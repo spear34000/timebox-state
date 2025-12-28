@@ -15,7 +15,7 @@ export function createHistory<T>(
 
   const cloneFn = options.clone ?? clone;
   const shouldRecord = options.shouldRecord ?? (() => true);
-  
+
   let id = 0;
   let silent = false;
 
@@ -24,10 +24,7 @@ export function createHistory<T>(
     present: {
       id: id++,
       timestamp: Date.now(),
-
       state: cloneFn(store.get()),
-      state: clone(store.get()),
-
     },
     future: [],
   };
@@ -47,11 +44,8 @@ export function createHistory<T>(
 
     history.present = {
       id: id++,
-      
       timestamp: Date.now(),
       state: cloneFn(next),
-      state: clone(next),
-
     };
 
     history.future = [];
@@ -60,7 +54,6 @@ export function createHistory<T>(
   function apply(snapshot: Snapshot<T>) {
     silent = true;
     store.set(cloneFn(snapshot.state), { silent: true });
-    store.set(clone(snapshot.state), { silent: true });
     silent = false;
   }
 

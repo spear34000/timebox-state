@@ -65,6 +65,61 @@ console.log(history.list());
 
 ```
 
+## 예제: 폼 빌더 / UX 프로토타이핑
+폼 구성 요소 추가·삭제·테마 변경을 모두 히스토리로 관리해 한 번에 여러 단계를 롤백할 수 있습니다. 전체 예시는 [`examples/form-builder.ts`](./examples/form-builder.ts)를 참고하세요.
+
+```ts
+import { createHistory } from "timebox-state-history";
+
+// 간단한 get/set/subscribe 스토어
+function createStore<T>(initial: T) {
+  let state = initial;
+  const listeners = new Set<(next: T, prev: T) => void>();
+
+  return {
+    get: () => state,
+    set: (next: T) => {
+      const prev = state;
+      state = next;
+      listeners.forEach((l) => l(next, prev));
+    },
+    subscribe: (fn: (next: T, prev: T) => void) => {
+      listeners.add(fn);
+      return () => listeners.delete(fn);
+    },
+  };
+}
+
+const store = createStore({
+  pages: [{ id: "page-1", title: "회원가입", fields: [] }],
+  theme: { primary: "#0b6", accent: "#f60" },
+});
+
+const history = createHistory(store, { max: 50 });
+history.mark("기본 폼");
+
+function addField(label: string) {
+  store.set({
+    ...store.get(),
+    pages: [
+      {
+        ...store.get().pages[0],
+        fields: [
+          ...store.get().pages[0].fields,
+          { id: crypto.randomUUID(), label, type: "text" },
+        ],
+      },
+    ],
+  });
+  history.mark(`필드 추가: ${label}`);
+}
+
+addField("이메일");
+addField("전화번호");
+history.undo(); // 전화번호 필드 제거
+history.redo(); // 전화번호 필드 다시 추가
+```
+
 ## API
 
 ### `createHistory(store, options?)`
