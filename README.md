@@ -28,9 +28,10 @@ npm install timebox-state-history
 
 ```ts
 import { createHistory } from "timebox-state-history";
+import { createState } from "timebox-state";
 
 // get / set / subscribe를 제공하는 스토어라면 무엇이든 사용 가능합니다.
-const store = createStore({ count: 0 }); // 예시
+const store = createState({ count: 0 });
 
 const history = createHistory(store, {
   max: 100,
