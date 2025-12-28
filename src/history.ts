@@ -32,8 +32,6 @@ export function createHistory<T>(
   // track changes from the store
   store.subscribe((next) => {
     if (silent) return;
-
-
     if (!shouldRecord(next, history.present.state)) return;
 
     history.past.push(history.present);
